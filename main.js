@@ -1,12 +1,36 @@
-let usuario = prompt (" Ingresa nombre de usuario ");
-while( usuario == " " ){                               /* ver de poner tambien un "o aceptar" o nada... */
-    alert( usuario + "No es nombre de usuario");      /*mas a delante ver p/ poner un inicio de sesion */
-    usuario = prompt(" Ingresa nuevo nombre de usuario");
-   
-}
+//DOM//
+const buttIniciarSecion= document.getElementById("buttIniciarSecion");
+const nombreUsInput= document.getElementById("nombreUs");
+const buttBajoTecho= document.getElementById("buttBajoTecho");
+const buttSinTecho= document.getElementById("buttSinTecho");
+const error= document.getElementById("error");
+const nombreUsLeido= document.getElementById("nombreUsLeido");
+const elegirOpcion= document.getElementById("elegirOpcion");
+const mensajeFinal= document.getElementById("mensajeFinal");
+//...................//
 
-/* ver si cambiar el script de lugar abajo de todo, en el body para que aparezca 
-el html antes de terminar toda la ejecucion de js */
+
+//let usuario = prompt (" Ingresa nombre de usuario ");
+//while( usuario == " " ){                               /* ver de poner tambien un "o aceptar" o nada... */
+ //   alert( usuario + "No es nombre de usuario");      /*mas a delante ver p/ poner un inicio de sesion */
+   // usuario = prompt(" Ingresa nuevo nombre de usuario");
+   
+//}
+
+buttIniciarSesion.addEventListener("click", function() {
+    const nombreUs = nombreUsInput.value;
+    if (nombreUs.trim() === "") {
+        error.style.display = "block";
+    } else {
+        error.style.display = "none";
+        nombreUsLeido.textContent = nombreUs;
+        elegirOpcion.style.display = "block";
+        localStorage.setItem("nombreUsuario", nombreUs);
+    }
+});
+
+
+
 
 
 /*objetos contructores/ funciones contructoras*/
@@ -17,7 +41,7 @@ const lugaresDisponibles = {
     chata: 100,
 };
 
-class Vehiculo {                      /*no era mi intencion poner una clase pero pide esa correcion (no se porque)*/
+class Vehiculo {                     
     constructor(marca, patente, tipo) {
         this.marca = marca;
         this.patente = patente;
@@ -36,10 +60,11 @@ function contarVehiculos() {
 }
 
 /*Arrays + funciones y metodos*/
-const vehiculosEstacionados = [];
+const vehiculosEstacionados = JSON.parse(localStorage.getItem("vehiculosEstacionados")) || [];
 
 function agregarvehiculo (vehiculo) {
     vehiculosEstacionados.push(vehiculo);
+    localStorage.setItem("vehiculosEstacionados", JSON.stringify(vehiculosEstacionados));
 }
 
 function removerVehiculo (patente) {
@@ -47,6 +72,7 @@ function removerVehiculo (patente) {
     if (indice !== -1) {
         const vehiculoRemovido = vehiculosEstacionados.splice(indice, 1)[0];
         lugaresDisponibles[vehiculoRemovido.tipo]++;
+        localStorage.setItem("vehiculosEstacionados", JSON.stringify(vehiculosEstacionados));
         return vehiculoRemovido;
     } else {
         return null;
@@ -55,15 +81,26 @@ function removerVehiculo (patente) {
 }
 
 
-let techo = prompt("Bienvenido " + usuario + " elija una opcion: bajotecho - sintecho ")
+/*let techo = prompt("Bienvenido "  + " elija una opcion: bajotecho - sintecho ")
 
 if(techo === "bajotecho"){
-    alert (" Elejiste bajotecho");
+    mensajeFinal.textContent= " Elejiste bajotecho";
     bajotecho();
 
 }else{
-    alert( "Elejiste sintecho, tenes lugar en planta baja A. Gracias" );
-}
+    mensajeFinal.textcontent= "Elejiste sintecho, tenes lugar en planta baja A. Gracias";
+}*/
+
+buttBajoTecho.addEventListener("click", function() {
+    mensajeFinal.style.display="block";
+    mensajeFinal.textContent = "Elejiste bajotecho";
+    bajotecho();
+});
+
+buttSinTecho.addEventListener("click", function() {
+    mensajeFinal.style.display="block";
+    mensajeFinal.textContent = "Elejiste sintecho, tenes lugar en planta baja A. Gracias";
+});
 
 /* Funciones*/
 
@@ -75,9 +112,9 @@ function bajotecho() {
             if (lugaresDisponibles.auto > 0) {
                 agregarvehiculo(new Vehiculo("Desc", "Desc", "auto"));
                 lugaresDisponibles.auto--;
-                alert("Elejiste auto, tenes lugar en el primer piso. Gracias");
+                mensajeFinal.textContent= "Elejiste auto, tenes lugar en el primer piso. Gracias";
             } else {
-                alert("Lo sentimos, no hay lugares disponibles");
+                mensajeFinal.textContent= "Lo sentimos, no hay lugares disponibles";
             }
             break;
 
@@ -85,9 +122,9 @@ function bajotecho() {
             if (lugaresDisponibles.moto > 0) {
                 agregarvehiculo(new Vehiculo("Desc", "Desc", "moto"));
                 lugaresDisponibles.moto--;
-                alert("Elejiste moto, tenes lugar en planta baja B. Gracias");
+                mensajeFinal.textContent= "Elejiste moto, tenes lugar en planta baja B. Gracias";
             } else {
-                alert("Lo sentimos, no hay lugares disponibles");
+                mensajeFinal.textContent= "Lo sentimos, no hay lugares disponibles";
             }
             break;
 
@@ -95,17 +132,23 @@ function bajotecho() {
             if (lugaresDisponibles.chata > 0) {
                 agregarvehiculo(new Vehiculo("Desc", "Desc", "chata"));
                 lugaresDisponibles.chata--;
-                alert("Elejiste Chata, tenes lugar en el segundo piso. Gracias");
+                mensajeFinal.textContent= "Elejiste Chata, tenes lugar en el segundo piso. Gracias";
             } else {
-                alert("Lo sentimos, no hay lugares disponibles");
+                mensajeFinal.textContent= "Lo sentimos, no hay lugares disponibles";
             }
             break;
         default:
-            alert("No es una opcion valida");
+            mensajeFinal.textContent= "No es una opcion valida";
             break;
 
     }
 
+}
+
+const nombreUsuarioGuardado = localStorage.getItem("nombreUsuario");
+if(nombreUsuarioGuardado) {
+    nombreUsLeido.textContent = nombreUsuarioGuardado;
+    elegirOpcion.style.display = "block";
 }
 
 contarVehiculos();
@@ -115,22 +158,4 @@ console.log("Lugares disponible para moto:", lugaresDisponibles.moto);
 console.log("Lugares disponible para chata:", lugaresDisponibles.chata);
 
 /*...........................................................................................................*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estacionamiento Centro</title>
-    <script src="main.js"></script>
+    <title>EstaCent</title>
+    
 </head>
 <body>
     
-    <h1> " Bienvenido a Estacionamiento Centro "</h1>
-    <br>
-    <h2> Muchas Gracias!</h2>
+    <h1> " Estacionamiento Centro "</h1>
+    <div>
+        <lebel for="nombreUs">Ingresa nombre:</lebel>
+        <input type="text" id="nombreUs">
+        <button id="buttIniciarSesion">Iniciar sesion</button>
+        <p id="error" style="color:rgb(204, 59, 40); display: none;">Nombre no puede estar vacio, ingrese nombre!</p>
+    </div>
+    <div id="elegirOpcion" style="display: none;">
+        <p> Bienvenido <span id="nombreUsLeido"></span>, elige una opciion:</p>
+        <button id="buttBajoTecho">Bajo Techo</button>
+        <button id="buttSinTecho">Sin Techo</button>
+
+    </div>
+    <div id="mensajeFinal" style="display: none;"></div>
 
 
-
-
+    
+    
+    
+    
+    <script src="main.js"></script>
+    
     
 </body>
 </html>
