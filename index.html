@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
     <title>EstaCent</title>
     
 </head>
@@ -16,7 +18,7 @@
         <p id="error" style="color:rgb(204, 59, 40); display: none;">Nombre no puede estar vacio, ingrese nombre!</p>
     </div>
     <div id="elegirOpcion" style="display: none;">
-        <p> Bienvenido <span id="nombreUsLeido"></span>, elige una opciion:</p>
+        <p> Bienvenido <span id="nombreUsLeido"></span>, elige una opcion:</p>
         <button id="buttBajoTecho">Bajo Techo</button>
         <button id="buttSinTecho">Sin Techo</button>
 
@@ -38,8 +40,19 @@
         <p id="lugaresMoto">Lugares disponibles para motos: </p>
         <p id="lugaresChata">Lugares disponibles para chatas: </p>
     </div>
+    <div id="usuarSeccion">
+        <h2>Usuarios Registrados:</h2>
+        <ul id="usuarList"></ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="main.js"></script>
     
-    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Estacionamiento Centro. Todos los derechos reservados.</p>
+            <p>Contacto: <a href="mail:info@estacionamientocentro.com">info@estacionamientocentro.com</a></p>
+        </div>
+  </footer>  
 </body>
+
 </html>

@@ -1,5 +1,5 @@
 //DOM//
-const buttIniciarSecion= document.getElementById("buttIniciarSecion");
+const buttIniciarSesion= document.getElementById("buttIniciarSesion");
 const nombreUsInput= document.getElementById("nombreUs");
 const buttBajoTecho= document.getElementById("buttBajoTecho");
 const buttSinTecho= document.getElementById("buttSinTecho");
@@ -13,6 +13,7 @@ const mensajeFinal= document.getElementById("mensajeFinal");
 const lugaresAuto = document.getElementById("lugaresAuto");
 const lugaresMoto = document.getElementById("lugaresMoto");
 const lugaresChata = document.getElementById("lugaresChata");
+const usuarList = document.getElementById("usuarList");
 //...................//
 
 buttIniciarSesion.addEventListener("click", function() {
@@ -89,8 +90,11 @@ buttBajoTecho.addEventListener("click", function() {
 });
 
 buttSinTecho.addEventListener("click", function() {
-    mensajeFinal.style.display="block";
-    mensajeFinal.textContent = "Elejiste sintecho, tenes lugar en planta baja A. Gracias";
+    Swal.fire({
+        title: "¡Elegiste Sin Techo!",
+        text: "Tenes lugar en planta baja A.",
+        icon: "OK"
+      });
 });
 
 /* Funciones*/
@@ -106,7 +110,11 @@ buttConfirmarVehiculo.addEventListener("click", function() {
         case "auto":
             if (lugaresDisponibles.auto > 0) {
                 agregarvehiculo(new Vehiculo("Desc", "Desc", "auto"));
-                mensajeFinal.textContent = "Elejiste auto, tenes lugar en el primer piso. Gracias";
+                Swal.fire({
+                    title: "¡Elegiste Auto!",
+                    text: "Tenes lugar en el primer piso.",
+                    icon: "OK"
+                  });
             } else {
                 mensajeFinal.textContent = "Lo sentimos, no hay lugares disponibles";
             }
@@ -115,7 +123,11 @@ buttConfirmarVehiculo.addEventListener("click", function() {
         case "moto":
             if (lugaresDisponibles.moto > 0) {
                 agregarvehiculo(new Vehiculo("Desc", "Desc", "moto"));
-                mensajeFinal.textContent = "Elejiste moto, tenes lugar en planta baja B. Gracias";
+                Swal.fire({
+                    title: "¡Elegiste Moto!",
+                    text: "Tenes lugar en planta baja B.",
+                    icon: "OK"
+                  });
             } else {
                 mensajeFinal.textContent = "Lo sentimos, no hay lugares disponibles";
             }
@@ -124,7 +136,11 @@ buttConfirmarVehiculo.addEventListener("click", function() {
         case "chata":
             if (lugaresDisponibles.chata > 0) {
                 agregarvehiculo(new Vehiculo("Desc", "Desc", "chata"));
-                mensajeFinal.textContent = "Elejiste Chata, tenes lugar en el segundo piso. Gracias";
+                Swal.fire({
+                    title: "¡Elegiste Chata!",
+                    text: "Tenes lugar en el segundo piso.",
+                    icon: "OK"
+                  });
             } else {
                 mensajeFinal.textContent = "Lo sentimos, no hay lugares disponibles";
             }
@@ -146,5 +162,23 @@ if(nombreUsuarioGuardado) {
 contarVehiculos();
 actualizarEstadoLugares();
 
-/*...........................................................................................................*/
+// Funciones para obtener y mostrar usuarios desde la API
+function fetchUsuars() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => displayUsuars(data))
+        .catch(error => console.error('Error al obtener usuarios:', error));
+}
 
+function displayUsuars(usuars) {
+    usuars.forEach(usuar => {
+        const listItem = document.createElement('li');
+        listItem.textContent = usuar.name;
+        usuarList.appendChild(listItem);
+    });
+}
+
+fetchUsuars();
+
+/*...........................................................................................................*/
+/* "proyectoFinal AcostaCristina"*/
